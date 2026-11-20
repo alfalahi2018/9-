@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noor Task 09 — Hammerhead Shark & Ocean Facts</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 24px 12px;
+      background: #e9ecf1;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      color: #1f2937;
+    }
+    .sheet {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 28px 34px 36px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+      border: 1px solid #d1d5db;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .title-banner {
+      flex: 1;
+      background: #334155;
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 6px;
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+    .score-box {
+      width: 96px;
+      border: 2px solid #334155;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e293b;
+      background: #f8fafc;
+    }
+    .task-badge {
+      width: 84px;
+      background: #334155;
+      color: #ffffff;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      text-align: center;
+      line-height: 1.15;
+    }
+    .task-badge .label {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+    .task-badge .num {
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+    .meta-lines {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: #374151;
+      margin-bottom: 16px;
+    }
+    .meta-lines strong {
+      font-weight: 700;
+      color: #111827;
+    }
+    .student-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin: 14px 0 20px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .field-line {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .field-line input {
+      border: none;
+      border-bottom: 1.5px solid #374151;
+      outline: none;
+      font-size: 14px;
+      padding: 2px 6px;
+      width: 190px;
+      background: transparent;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1.5px solid #cbd5e1;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+    .section-header h2 {
+      margin: 0;
+      font-size: 14.5px;
+      letter-spacing: 0.4px;
+      color: #111827;
+      text-transform: uppercase;
+    }
+    .section-header .marks {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #374151;
+    }
+    .instruction {
+      font-size: 13.5px;
+      font-style: italic;
+      color: #374151;
+      margin: 8px 0 14px;
+    }
+    .bubble-demo {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #111827;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+    .passage-box {
+      border: 1.5px solid #334155;
+      border-radius: 6px;
+      padding: 16px 20px;
+      font-size: 15px;
+      line-height: 1.85;
+      color: #111827;
+      background: #ffffff;
+      margin-bottom: 22px;
+    }
+    .gap-slot {
+      display: inline-block;
+      min-width: 96px;
+      border-bottom: 1.5px solid #1f2937;
+      text-align: center;
+      font-weight: 700;
+      color: #0f172a;
+      padding: 0 6px;
+      margin: 0 2px;
+    }
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .option-row {
+      display: grid;
+      grid-template-columns: 44px repeat(3, 1fr);
+      align-items: center;
+      gap: 12px;
+      padding: 6px 8px;
+      border-radius: 6px;
+    }
+    .option-row:hover {
+      background: #f8fafc;
+    }
+    .item-num {
+      font-weight: 700;
+      font-size: 14.5px;
+      color: #111827;
+    }
+    .bubble-choice {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      cursor: pointer;
+      font-size: 14.5px;
+      color: #1f2937;
+      user-select: none;
+    }
+    .bubble-choice input {
+      display: none;
+    }
+    .bubble-circle {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 1.8px solid #334155;
+      display: inline-block;
+      position: relative;
+      background: #ffffff;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .bubble-choice input:checked + .bubble-circle {
+      background: #111827;
+      border-color: #111827;
+      box-shadow: inset 0 0 0 2.5px #ffffff;
+    }
+    .bubble-choice input:checked ~ .opt-text {
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .actions {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    button {
+      border: none;
+      border-radius: 6px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .btn-check {
+      background: #334155;
+      color: #ffffff;
+    }
+    .btn-check:hover {
+      background: #1e293b;
+    }
+    .btn-reset {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+    .btn-reset:hover {
+      background: #cbd5e1;
+    }
+    .result-banner {
+      margin-top: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .sheet {
+        box-shadow: none;
+        border: none;
+        padding: 10px;
+      }
+      .actions, .result-banner {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="top-bar">
+      <div class="title-banner">Grade 7 English Language</div>
+      <div class="score-box" id="scoreDisplay">5</div>
+      <div class="task-badge">
+        <span class="label">Noor<br/>Task</span>
+        <span class="num">09</span>
+      </div>
+    </div>
+
+    <div class="meta-lines">
+      <div><strong>Electronic Task – Vocabulary &amp; Grammar</strong></div>
+      <div><strong>Noor Platform Assignment</strong></div>
+      <div><strong>Prepared by:</strong> T.Badria Alfalahi</div>
+    </div>
+
+    <div class="student-row">
+      <label class="field-line">Name: <input type="text" placeholder="" /></label>
+      <label class="field-line">Class: 7 <input type="text" style="width: 110px;" placeholder="" /></label>
+    </div>
+
+    <div class="section-header">
+      <h2>Vocabulary &amp; Grammar</h2>
+      <span class="marks">(5 marks)</span>
+    </div>
+
+    <p class="instruction">
+      For each item, shade in the bubble <span class="bubble-demo"></span> next to the correct option.
+    </p>
+
+    <div class="passage-box">
+      The hammerhead shark has a wide head shaped like a hammer. It uses a special sixth (1) <span class="gap-slot" id="gap-1"></span> to find hidden stingrays in the sand. Its body has strong (2) <span class="gap-slot" id="gap-2"></span> and smooth skin that helps it glide through warm seas. Unlike many other fish, a hammerhead shark (3) <span class="gap-slot" id="gap-3"></span> lay eggs; instead, it gives birth to live pups. Because it hunts small fish and squid, it (4) <span class="gap-slot" id="gap-4"></span> be a plant-eating animal. (5) <span class="gap-slot" id="gap-5"></span> stingrays hide in the sand, the shark can still sense them.
+    </div>
+
+    <div class="options-grid">
+      <div class="option-row"><div class="item-num">1)</div><label class="bubble-choice"><input type="radio" name="q1" value="sense" /><span class="bubble-circle"></span><span class="opt-text">sense</span></label><label class="bubble-choice"><input type="radio" name="q1" value="hump" /><span class="bubble-circle"></span><span class="opt-text">hump</span></label><label class="bubble-choice"><input type="radio" name="q1" value="beak" /><span class="bubble-circle"></span><span class="opt-text">beak</span></label></div>
+      <div class="option-row"><div class="item-num">2)</div><label class="bubble-choice"><input type="radio" name="q2" value="fins" /><span class="bubble-circle"></span><span class="opt-text">fins</span></label><label class="bubble-choice"><input type="radio" name="q2" value="horns" /><span class="bubble-circle"></span><span class="opt-text">horns</span></label><label class="bubble-choice"><input type="radio" name="q2" value="paws" /><span class="bubble-circle"></span><span class="opt-text">paws</span></label></div>
+      <div class="option-row"><div class="item-num">3)</div><label class="bubble-choice"><input type="radio" name="q3" value="doesn't" /><span class="bubble-circle"></span><span class="opt-text">doesn't</span></label><label class="bubble-choice"><input type="radio" name="q3" value="mustn't" /><span class="bubble-circle"></span><span class="opt-text">mustn't</span></label><label class="bubble-choice"><input type="radio" name="q3" value="won't" /><span class="bubble-circle"></span><span class="opt-text">won't</span></label></div>
+      <div class="option-row"><div class="item-num">4)</div><label class="bubble-choice"><input type="radio" name="q4" value="can't" /><span class="bubble-circle"></span><span class="opt-text">can't</span></label><label class="bubble-choice"><input type="radio" name="q4" value="must" /><span class="bubble-circle"></span><span class="opt-text">must</span></label><label class="bubble-choice"><input type="radio" name="q4" value="will" /><span class="bubble-circle"></span><span class="opt-text">will</span></label></div>
+      <div class="option-row"><div class="item-num">5)</div><label class="bubble-choice"><input type="radio" name="q5" value="Even if" /><span class="bubble-circle"></span><span class="opt-text">Even if</span></label><label class="bubble-choice"><input type="radio" name="q5" value="Unless" /><span class="bubble-circle"></span><span class="opt-text">Unless</span></label><label class="bubble-choice"><input type="radio" name="q5" value="Before" /><span class="bubble-circle"></span><span class="opt-text">Before</span></label></div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-check" onclick="checkAnswers()">Check Answers</button>
+      <button type="button" class="btn-reset" onclick="resetTask()">Reset</button>
+    </div>
+    <div class="result-banner" id="resultBanner"></div>
+  </div>
+
+  <script>
+    const answerKey = ["sense", "fins", "doesn"t", "can"t", "Even if"];
+
+    function updateGaps() {
+      for (let i = 1; i <= 5; i++) {
+        const checked = document.querySelector(`input[name="q${i}"]:checked`);
+        const slot = document.getElementById(`gap-${i}`);
+        if (slot) {
+          slot.textContent = checked ? checked.value : "";
+        }
+      }
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      for (let i = 1; i <= 5; i++) {
+        const checked = document.querySelector(`input[name="q${i}"]:checked`);
+        if (checked && checked.value === answerKey[i - 1]) {
+          score++;
+        }
+      }
+      document.getElementById("scoreDisplay").textContent = `${score} / 5`;
+      document.getElementById("resultBanner").textContent =
+        `Your Score: ${score} out of 5 marks.`;
+    }
+
+    function resetTask() {
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+      document.getElementById("scoreDisplay").textContent = "5";
+      document.getElementById("resultBanner").textContent = "";
+      updateGaps();
+    }
+
+    document.querySelectorAll('input[type="radio"]').forEach(r => {
+      r.addEventListener("change", updateGaps);
+    });
+  </script>
+</body>
+</html>
